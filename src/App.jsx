@@ -1,23 +1,29 @@
-import { useState } from 'react'
+import {useState } from 'react'
 import './App.css'
 import shirtIcon from './shirt.png'
 import jacketIcon from './jacket.png'
 import winterJacketIcon from './winterJacket.png'
 import rainJacket from './rainJacket.png'
+import sunIcon from './sun.svg'
 
 function App() {
   const [cityName, setCityName] = useState("")
   const [weatherData, setWeatherData] = useState(null)
+  const [isHovering, setIsHovering] = useState(false)
 
   const handleCityNameInput = (e) => {
     setCityName(e.target.value)
   }
 
-  const weatherIcons = {
+  const clothingIcons = {
     Clear: shirtIcon,
     Clouds: jacketIcon,
     Snow: winterJacketIcon,
     Rain: rainJacket
+  }
+
+  const weatherIcons = {
+    Clear: sunIcon
   }
 
   const fetchOpenWeatherApi = () => {
@@ -40,21 +46,33 @@ function App() {
       />
       <button onClick={fetchOpenWeatherApi}>Suchen</button>
 
-      <div>
+      <div className='weather-container'>
         {weatherData?.main && (
           <>
-            <p>
+          <div className='tile'><img src={weatherIcons[weatherData.weather[0].main]}></img></div>
+            <div className='tile'>
               <img
-                src={weatherIcons[weatherData.weather[0].main]}
+                src={clothingIcons[weatherData.weather[0].main]}
                 className='weather-icon'
                 alt={weatherData.weather[0].main}
               />
-            </p>
-            <p>{Math.round(weatherData.main.temp)}°C</p>
-            <p>{Math.round(weatherData.main.feels_like)}°C gefühlte Temperatur</p>
-            <p>{weatherData.weather[0].main}</p>
-
-
+            </div>
+            <div
+              className="tile"
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+            >
+              <span style={{ fontWeight: 'bold' }}>
+                {isHovering ? "Gefühlt" : "Temperatur"}
+              </span>
+              <p>
+                {isHovering
+                  ? `${Math.round(weatherData.main.feels_like)}°C`
+                  : `${Math.round(weatherData.main.temp)}°C`
+                }
+              </p>
+            </div>
+            
           </>
         )}
       </div>
