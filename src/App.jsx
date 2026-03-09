@@ -11,6 +11,8 @@ import cloudsIcon from './clouds.svg'
 import sweaterIcon from './sweater.png'
 import rainIcon from './rain.svg'
 import appLogo from './Logo.jpeg'
+import windIcon from './wind.svg'
+
 
 function App() {
   const [cityName, setCityName] = useState("")
@@ -69,6 +71,13 @@ const getClothingIcon = (temp) => {
                 alt={weatherData.weather[0].main}
               />
             </div>
+            <div className='tile'>
+              <img
+              src= {windIcon}
+              
+              />
+              {(weatherData.wind.speed * 3.6).toFixed(1)} km/h
+            </div>
             <div
               className="tile"
               onMouseEnter={() => setIsHovering(true)}
@@ -93,4 +102,4 @@ const getClothingIcon = (temp) => {
   )
 }
 
-export default Appgit
+export default App

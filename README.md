@@ -22,6 +22,8 @@ Simple weather application built with React using the OpenWeather API.
 ## Features
 - Search by City: Real-time data fetching from OpenWeather API
 - display temperature
+- display windspeed
+- display weather status (like clear, cloudy etc)
 - Dynamic Clothing Advice: Smart logic that recommends outfits (Shirt, Jacket, Winter Jacket)based on current temperature thresholds
 - Interactive UI: Hover effects to toggle between actual temperature and "feels like" temperature
 - Hidden Easter Egg: A little surprise for users who interact with the weather icons during sunny days
