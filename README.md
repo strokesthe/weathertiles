@@ -1,3 +1,7 @@
+![App Screenshot](./assets/screenshot.png)
+
+
+
 # React Weather App
 
 Simple weather application built with React using the OpenWeather API.
@@ -5,11 +9,14 @@ Simple weather application built with React using the OpenWeather API.
 
 ## How to install
 
-- download source code
+- click on "Code"
+- click on "Download Zip"
 - drag folder into vs code
 - open new terminal
 - type "npm install"
 - type "npm run dev"
+- copy the "Local:" adress
+- paste the URL into your browser and press enter
 - enjoy =)
 
 ## Features
