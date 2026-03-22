@@ -1,15 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import { icons, getClothingIcon } from "./icons.js";
 import { fetchCurrentWeather, fetchForecast, fetchWeatherByCoords } from "./weatherservices.js";
 
 function App() {
-  const [cityName, setCityName] = useState("");
+  const [cityName, setCityName] = useState(() => {
+    return localStorage.getItem("lastCity") || "";
+  });
+  
   const [weatherData, setWeatherData] = useState(null);
   const [forecastData, setForecastData] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
   const [error, setError] = useState(null);
   const [searchKey, setSearchKey] = useState(0);
+
+ 
+  useEffect(() => {
+    const lastCity = localStorage.getItem("lastCity");
+    if (lastCity) {
+      handleFetchCurrent(lastCity);
+    }
+  }, []);
 
   const weatherIcons = {
     Clear: icons.sun,
@@ -24,13 +35,18 @@ function App() {
     setCityName(e.target.value);
   };
 
-  const handleFetchCurrent = async () => {
+
+  const handleFetchCurrent = async (cityToFetch) => {
+    const searchCity = cityToFetch || cityName;
+    if (!searchCity) return;
+
     try {
       setError(null);
       setForecastData(null);
-      const data = await fetchCurrentWeather(cityName);
+      const data = await fetchCurrentWeather(searchCity);
       setWeatherData(data);
       setSearchKey((prev) => prev + 1);
+      localStorage.setItem("lastCity", searchCity);
     } catch (err) {
       setWeatherData(null);
       setError(err.message);
@@ -44,6 +60,7 @@ function App() {
       const data = await fetchForecast(cityName);
       setForecastData(data);
       setSearchKey((prev) => prev + 1);
+      localStorage.setItem("lastCity", cityName);
     } catch (err) {
       setForecastData(null);
       setError(err.message);
@@ -61,6 +78,7 @@ function App() {
           setWeatherData(data);
           setCityName(data.name);
           setSearchKey((prev) => prev + 1);
+          localStorage.setItem("lastCity", data.name);
         } catch (err) {
           setError(err.message);
         }
@@ -93,7 +111,7 @@ function App() {
               if (e.key === "Enter") handleFetchCurrent();
             }}
           />
-          <button onClick={handleFetchCurrent}>Suchen</button>
+          <button onClick={() => handleFetchCurrent()}>Suchen</button>
           <button onClick={handleFetchForecast}>5 Tage</button>
           <button onClick={handleLocationFetch}>Standort</button>
         </div>
