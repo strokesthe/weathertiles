@@ -151,7 +151,7 @@ function App() {
                   <div
                     key={index}
                     className="tile"
-                    style={{ background: getDynamicBg(temp) }}>
+                    style={{ background: getDynamicBg(temp), animationDelay: `${index * 0.1}s` } }>
                     <p style={{ fontWeight: "bold" }}>
                       {new Date(item.dt * 1000).toLocaleDateString("de-DE", {
                         weekday: "short",
