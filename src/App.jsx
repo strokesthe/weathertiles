@@ -114,6 +114,7 @@ function App() {
                  onMouseLeave={() => setIsHovering(false)}>
               <span style={{ fontWeight: 'bold' }}>{isHovering ? "Gefühlt" : "Temperatur"}</span>
               <p>{Math.round(isHovering ? weatherData.main.feels_like : weatherData.main.temp)}°C</p>
+              <p>{Math.round(weatherData.main.temp_min)}°C - {Math.round(weatherData.main.temp_max)}°C</p>
             </div>
           </div>
         )}
@@ -135,6 +136,7 @@ function App() {
                   <img src={getClothingIcon(temp)} alt="Outfit" style={{ width: '35px' }} />
                   <p style={{ fontWeight: 'bold' }}>{Math.round(temp)}°C</p>
                   <p style={{ fontSize: '0.75rem', opacity: 0.8 }}>{(item.wind.speed * 3.6).toFixed(0)} km/h</p>
+                  
                 </div>
               );
             })}
